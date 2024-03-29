@@ -63,15 +63,20 @@
 <h2>--------------------------------------------------------------</h2>
 
 <h1>Fichier à analyser</h1>
-<form action="/choose" method="post">
+<form action="/choose" method="post" enctype="multipart/form-data" >
     <input type="hidden"  th:value=0>
 
-    Fichier : <input type="tex"> No file chosen
+    Fichier : <input type="file" name="file"  class="form-control" >
 
-    <input type="submit" >
+    <input type="submit" ><br>
 </form>
+
 <h2>---------------------------------------------------------------</h2>
 <h1>Résultat</h1>
+
+<div th:if="${wordCount != null}">
+    Word count: <span th:text="${model.wordCount}"></span>
+</div>
 <form action="/count" method="post">
     Mot: <input type="text" name="nom">
     <input type="submit">
