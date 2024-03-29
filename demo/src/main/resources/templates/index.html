@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events for Agenda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2; /* Couleur de fond */
+            color: #333; /* Couleur du texte */
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            color: #3F2D3F; /* Couleur des titres */
+        }
+        ul {
+            list-style-type: none; /* Pas de puces */
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px; /* Marge entre les éléments de la liste */
+        }
+        .delete-link {
+            color: #ff0000; /* Couleur du lien de suppression */
+            margin-left: 10px; /* Marge à gauche */
+            text-decoration: none; /* Pas de soulignement */
+        }
+        .delete-link:hover {
+            text-decoration: underline; /* Soulignement au survol */
+        }
+        form {
+            margin-top: 20px; /* Marge en haut du formulaire */
+        }
+        input[type="text"] {
+            width: 200px; /* Largeur des champs texte */
+            padding: 5px; /* Remplissage intérieur */
+            margin-bottom: 10px; /* Marge en bas */
+        }
+        input[type="submit"] {
+            background-color: #3F2D3F; /* Couleur de fond du bouton */
+            color: #fff; /* Couleur du texte du bouton */
+            border: none; /* Pas de bordure */
+            padding: 10px 20px; /* Remplissage intérieur */
+            cursor: pointer; /* Curseur pointer */
+        }
+        input[type="submit"]:hover {
+            background-color: #5B4565; /* Couleur de fond du bouton au survol */
+        }
+    </style>
+</head>
+<body>
+<h1>TP3 - AKKA</h1><br>
+
+<h2>--------------------------------------------------------------</h2>
+
+<h1>Initialisation des acteurs Akka</h1>
+
+<form action="/init" method="post">
+    <input type="submit" value="Init">
+</form>
+
+<h2>--------------------------------------------------------------</h2>
+
+<h1>Fichier à analyser</h1>
+<form action="/choose" method="post">
+    <input type="hidden"  th:value=0>
+
+    Fichier : <input type="tex"> No file chosen
+
+    <input type="submit" >
+</form>
+<h2>---------------------------------------------------------------</h2>
+<h1>Résultat</h1>
+<form action="/count" method="post">
+    Mot: <input type="text" name="nom">
+    <input type="submit">
+</form>
+</body>
+</html>
