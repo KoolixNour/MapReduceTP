@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/")
 public class MapController {
+    int nb;
     @Autowired mapService service;
     @PostMapping("/init")
     public String init(){
@@ -19,7 +20,8 @@ public class MapController {
     }
     @GetMapping("/index")
     public String home(Model model) {
-        return"index";
+        model.addAttribute("count",nb);
+    return"index";
     }
     @PostMapping("/choose")
     public String submit(@RequestParam @NotNull MultipartFile file, ModelMap modelMap) {
@@ -31,7 +33,7 @@ public class MapController {
     @PostMapping("/count")
     public String submit(@RequestParam String nom, Model model){
         int count = Integer.parseInt(service.nbOcc(nom));
-        model.addAttribute("wordCount",count);
+nb=count;
         return "redirect:/index";
 
     }

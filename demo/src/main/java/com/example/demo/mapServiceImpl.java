@@ -1,5 +1,6 @@
 package com.example.demo;
 
+
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Inbox;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import scala.concurrent.duration.FiniteDuration;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -25,6 +27,7 @@ public class mapServiceImpl implements mapService {
         mapper3 = system.actorOf(Props.create(MapperActor.class), "mapper3");
         reducer1 = system.actorOf(Props.create(ReducersActor.class), "reducer1");
         reducer2 = system.actorOf(Props.create(ReducersActor.class), "reducer2");
+
 
     }
 
@@ -51,23 +54,35 @@ public class mapServiceImpl implements mapService {
         }
     }
 
+
     @Override
     public String nbOcc(String word) {
         reducer1.tell(new RequestMessage(word), ActorRef.noSender());
-       // reducer2.tell(new RequestMessage(word), ActorRef.noSender());
+        reducer2.tell(new RequestMessage(word), ActorRef.noSender());
+
         Inbox inbox = Inbox.create(system);
         inbox.send(reducer1, new RequestMessage(word));
-        Object reply = null;
-        try {
-            reply = inbox.receive(FiniteDuration.create(5, TimeUnit.SECONDS));
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
-        }
-        if (reply instanceof Word rm) {
-            System.out.println("Réponse reçu : " + rm.word());
-            return rm.word();
-        }
-      return "non";
+        inbox.send(reducer2, new RequestMessage(word));
 
+        Object reply1 = null;
+        Object reply2 = null;
+        try {
+            reply1 = inbox.receive(FiniteDuration.create(5, TimeUnit.SECONDS));
+            reply2 = inbox.receive(FiniteDuration.create(5, TimeUnit.SECONDS));
+        } catch (TimeoutException e) {
+            return "0";
+        }
+
+        if (reply1 instanceof Word m1 && !Objects.equals(m1.word(), "0")) {
+            System.out.println("Réponse reçu (reply1) : " + m1.word());
+            return m1.word();
+        }
+        if (reply2 instanceof Word m2 && !Objects.equals(m2.word(), "0")) {
+            System.out.println("Réponse reçu (reply2) : " + m2.word());
+            return m2.word();
+        }
+
+        return "0";
     }
+
 }

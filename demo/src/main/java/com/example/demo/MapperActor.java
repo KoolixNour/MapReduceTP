@@ -16,11 +16,12 @@ public class MapperActor extends UntypedActor {
             }
 
     }
-
+// methode
 }
     private String partition(String word) {
         int reducerCount = 2;
         int hashCode = word.hashCode();
-        int reducerIndex = Math.abs(hashCode) % reducerCount; //
-        return "reducer" + (reducerIndex + 1); // Adjust for 1-based indexing of reducers
+        int reducerIndex = Math.abs(hashCode) % reducerCount;
+        return "reducer" + (reducerIndex + 1);
     }}
+//

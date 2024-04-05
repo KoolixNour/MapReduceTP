@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Events for Agenda</title>
+    <title>MapReduce TP</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,8 +74,8 @@
 <h2>---------------------------------------------------------------</h2>
 <h1>Résultat</h1>
 
-<div th:if="${wordCount != null}">
-    Word count: <span th:text="${model.wordCount}"></span>
+<div >
+    Word count:<span th:text="${count}"> 0 </span>
 </div>
 <form action="/count" method="post">
     Mot: <input type="text" name="nom">
